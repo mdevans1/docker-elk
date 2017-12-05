@@ -3,9 +3,10 @@ version: '2'
 services:
 
   elasticsearch:
-    build: elasticsearch/
+    build:
+      context: elasticsearch/
     volumes:
-      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
     ports:
       - "127.0.0.1:9200:9200"
       - "127.0.0.1:9300:9300"
@@ -15,7 +16,8 @@ services:
       - elk
 
   logstash:
-    build: logstash/
+    build:
+      context: logstash/
     command: -f /etc/logstash/conf.d/ --auto-reload
     volumes:
       - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:z
@@ -30,9 +32,10 @@ services:
       - elasticsearch
 
   kibana:
-    build: kibana/
+    build:
+      context: kibana/
     volumes:
-            - ./kibana/config/:/opt/kibana/config/:z
+      - ./kibana/config/:/usr/share/kibana/config:z
     ports:
             - "127.0.0.1:5601:5601"
     networks:
