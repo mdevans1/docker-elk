@@ -20,12 +20,20 @@ services:
   logstash:
     build:
       context: logstash/
+<<<<<<< HEAD
     command: -f /etc/logstash/conf.d/ --auto-reload
     volumes:
       - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:z
       - ./logstash/pipeline:/etc/logstash/conf.d:z
       args:
         ELK_VERSION: $ELK_VERSION
+=======
+      args:
+        ELK_VERSION: $ELK_VERSION
+    volumes:
+      - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+      - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
+>>>>>>> deviantony/master
     ports:
       - "5000:5000"
       - "9600:9600"
