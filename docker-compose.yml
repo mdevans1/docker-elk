@@ -5,6 +5,8 @@ services:
   elasticsearch:
     build:
       context: elasticsearch/
+      args:
+        ELK_VERSION: $ELK_VERSION
     volumes:
       - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
     ports:
@@ -22,8 +24,11 @@ services:
     volumes:
       - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:z
       - ./logstash/pipeline:/etc/logstash/conf.d:z
+      args:
+        ELK_VERSION: $ELK_VERSION
     ports:
       - "5000:5000"
+      - "9600:9600"
     environment:
       LS_JAVA_OPTS: "-Xmx256m -Xms256m"
     networks:
@@ -34,6 +39,8 @@ services:
   kibana:
     build:
       context: kibana/
+      args:
+        ELK_VERSION: $ELK_VERSION
     volumes:
       - ./kibana/config/:/usr/share/kibana/config:z
     ports:
